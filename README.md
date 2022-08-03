@@ -2,7 +2,7 @@
 2. npm install
 3. npm start
 
-*Note: You may see that there are vulnerabilities (6 high severity vulnerabilities) after, however these are false positives. Dan Abramov explains these issues in his article "npm audit: broken by Design" (link: https://overreacted.io/npm-audit-broken-by-design )/*
+*Note: You may see that there are vulnerabilities (6 high severity vulnerabilities) after 'npm install', however these are false positives. Dan Abramov explains these issues in his article "npm audit: broken by Design" (link: https://overreacted.io/npm-audit-broken-by-design )*
 
 
 
