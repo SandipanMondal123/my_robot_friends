@@ -1,52 +1,39 @@
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardList from '../components/CardList';
 import Scroll from '../components/Scroll';
 import SearchBox from '../components/SearchBox';
 
-//State describes the component (in this case app)
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      robots: [],
-      searchfield: ''
-    }
-  }
+function App() {
+  const [robots, setRobots] = useState([]);
+  const [searchfield, setSearchField] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
-      .then(users => this.setState({ robots: users }));
+      .then(users => setRobots(users));
+  },[])
 
-  }
-  onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value })
-
-  }
-
-  render() {
-    const filteredRobots = this.state.robots.filter(user => {
-      return user.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    })
-    if (!this.state.robots.length) {
-      return <h1 className='tc f1'> Loading all the Robots...</h1>
-    }
-    else {
-      return (
-        <div className='tc'>
-          <h1 className='f1'>My Robots!</h1>
-          <SearchBox searchChange={this.onSearchChange} />
-          <Scroll>
-            <CardList robots={filteredRobots} />
-
-          </Scroll>
-        </div>
-
-      );
-    }
-
+  const onSearchChange = (event) => {
+    setSearchField(event.target.value);
   }
 
+  const filteredRobots = robots.filter(user => {
+    return user.name.toLowerCase().includes(searchfield.toLowerCase());
+  })
+
+  if (!robots)
+    return <h1 className='tc f1'> Loading all the Robots...</h1>
+  else
+    return (
+      <div className='tc'>
+        <h1 className='f1'>My Robots!</h1>
+        <SearchBox searchChange={onSearchChange} />
+        <Scroll>
+          <CardList robots={filteredRobots} />
+        </Scroll>
+      </div>
+    );
 }
+
 export default App;
